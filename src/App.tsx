@@ -77,10 +77,14 @@ const Button = styled.button<{ $status: TStatus }>(({ $status = "idle" }) => ({
   },
 }));
 
-const FooterText = styled.small({
-  margin: "2rem 0",
-  fontWeight: "bold",
-});
+const FooterText = styled.small<{ $status: TStatus }>(
+  ({ $status = "idle" }) => ({
+    margin: "2rem 0",
+    fontWeight: "bold",
+    userSelect:
+      $status === "idle" || $status === "average-score" ? "auto" : "none",
+  }),
+);
 
 function App() {
   const [status, setStatus] = useState<TStatus>("idle");
@@ -184,7 +188,7 @@ function App() {
                       `Your average reaction time is: ${results.reduce((p, c) => p + c) / results.length}ms.`}
         </Text>
       </Area>
-      <FooterText>Developer: Amirreza Bahrami.</FooterText>
+      <FooterText $status={status}>Developer: Amirreza Bahrami.</FooterText>
     </>
   );
 }
